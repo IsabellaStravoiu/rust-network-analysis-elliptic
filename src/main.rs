@@ -44,6 +44,18 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
     println!("Graph has {} nodes and {} edges", graph.node_count(), graph.edge_count());
 
+    let degree_distribution = graph.degree_distribution();
+    println!("Degree distribution (degree → count):");
+    for (degree, count) in degree_distribution.iter() {
+         println!("{} → {}", degree, count);
+        }
+    // Step 4: Identify top-10 nodes
+    let top_nodes = graph.top_k_nodes(10);
+    println!("Top 10 most connected nodes:");
+    for (node, degree) in top_nodes {
+        println!("Node: {}, Degree: {}", node, degree);
+        }
+
     // #3 Run BFS or analysis
     let shortest_path = bfs::shortest_path(&graph, &transactions[0].tx_id1, &transactions[0].tx_id2);
     println!("Shortest path between first two nodes: {:?}", shortest_path);
