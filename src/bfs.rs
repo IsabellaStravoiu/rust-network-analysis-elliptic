@@ -1,11 +1,10 @@
-// Module Header:
-// bfs.rs: Implements Breadth-First Search (BFS) to find the shortest path between two nodes in the graph.
+// bfs.rs: Implements Breadth-First Search (BFS) to find the shortest path between two nodes in the graph
 
 use std::collections::{HashSet, VecDeque};
 
 use crate::graph::Graph;
 
-// One-sentence description: Finds shortest path between start and goal nodes using BFS.
+// Finds shortest path between start and goal nodes using BFS.
 pub fn shortest_path(graph: &Graph, start: &str, goal: &str) -> Option<Vec<String>> {
     if start == goal {
         return Some(vec![start.to_string()]);

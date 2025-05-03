@@ -3,13 +3,13 @@
 use std::collections::{HashMap, HashSet};
 use std::collections::BTreeMap;
 
-// Graph struct that uses adjacency list
+// Graph struct that will use adjacency list
 pub struct Graph {
     adjacency_list: HashMap<String, HashSet<String>>,
 }
 
 impl Graph {
-    // Creates a new, empty Graph.
+    // Creates a new, empty Graph
     pub fn new() -> Self {
         Graph {
             adjacency_list: HashMap::new(),
@@ -43,7 +43,7 @@ impl Graph {
         self.adjacency_list.get(node)
     }
 
-    // Returns  HashMap with degree counts (Each number of node is a degree)
+    // Returns  HashMap with degree counts
     pub fn degree_distribution(&self) -> BTreeMap<usize, usize> {
         let mut distribution = BTreeMap::new();
 
@@ -65,6 +65,8 @@ impl Graph {
         node_degrees.truncate(k);
         node_degrees
     }
-    
+    pub fn nodes(&self) -> Vec<String> {
+        self.adjacency_list.keys().cloned().collect()
+    }
 }
 
