@@ -1,22 +1,26 @@
+// Module Header
+// main.rs: Main for Bitcoin transaction network analysis project
+// Will read CSV data, build graph, and call analysis function
 
-//Sets up CSV parsing 
-//Loads txs)edgelist.csv file into data structure (vector and edge)
 use csv::ReaderBuilder;
 use serde::Deserialize;
 use std::error::Error;
 use std::fs::File;
 
-#[derive(Debug, serde::Deserialize)]
-struct Transaction {
-    #[serde(rename = "t xId1")]
-    tx_id1: String,
+mod graph;
+mod bfs;
 
+#[derive(Debug, Deserialize)]
+struct Transaction {
+    #[serde(rename = "txId1")]
+    tx_id1: String,
     #[serde(rename = "txId2")]
     tx_id2: String,
 }
 
+// Read the CSV and will return vector of the transactions
 fn read_csv() -> Result<Vec<Transaction>, Box<dyn Error>> {
-    let file = File::open("data/txs_edgelist.csv")?;  
+    let file = File::open("data/txs_edgelist.csv")?;
     let mut rdr = ReaderBuilder::new().has_headers(true).from_reader(file);
     let mut transactions = Vec::new();
 
@@ -29,10 +33,20 @@ fn read_csv() -> Result<Vec<Transaction>, Box<dyn Error>> {
 }
 
 fn main() -> Result<(), Box<dyn Error>> {
+    // #1 Read CSV
     let transactions = read_csv()?;
-    
-    // For now, just print the first transaction to check it
-    println!("{:?}", transactions[0]);
-    
+    println!("Loaded {} transactions", transactions.len());
+
+    // #2 Build graph
+    let mut graph = graph::Graph::new();
+    for tx in &transactions {
+        graph.add_edge(&tx.tx_id1, &tx.tx_id2);
+    }
+    println!("Graph has {} nodes and {} edges", graph.node_count(), graph.edge_count());
+
+    // #3 Run BFS or analysis
+    let shortest_path = bfs::shortest_path(&graph, &transactions[0].tx_id1, &transactions[0].tx_id2);
+    println!("Shortest path between first two nodes: {:?}", shortest_path);
+
     Ok(())
 }
