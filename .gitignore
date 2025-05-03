@@ -1,2 +1,17 @@
-data/txs_features.csv
-data/txs_features.csv
+# Ignore Rust build and target files
+/target/
+
+# Ignore Cargo.lock if it's a library project (keep if it's a binary project)
+# Cargo.lock
+
+# Ignore IDE/editor files
+.idea/
+.vscode/
+*.swp
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore large dataset files
+data/
