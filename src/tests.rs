@@ -40,4 +40,19 @@ mod tests {
         let path = bfs::shortest_path(&graph, "A", "C");
         assert_eq!(path, Some(vec!["A".to_string(), "B".to_string(), "C".to_string()]));
     }
+
+    /// Test_top_k_nodes
+    /// Test that top_k_nodes correctly identify the most connected wallets
+    #[test]
+    fn test_top_k_nodes() {
+        let mut graph = Graph::new();
+        graph.add_edge("A", "B");
+        graph.add_edge("A", "C");
+        graph.add_edge("A", "D");
+        graph.add_edge("B", "C");
+
+        let top = graph.top_k_nodes(1);
+        // Node A should be the top node with degree 3
+        assert_eq!(top[0], ("A".to_string(), 3));
+    }
 }
